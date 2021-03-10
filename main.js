@@ -1,3 +1,5 @@
+import{fetch} from ('./fetchApi.js');
+
 const getTodos = (resource) => {
     
     return new Promise((resolve, reject) => {
