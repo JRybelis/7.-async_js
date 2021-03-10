@@ -32,7 +32,9 @@ getTodos('todos/simA.json').then(data => {
     console.log('promise rejected: ', errror);
 });
 
+
 //async & await:
 
 getTodosA()
-    .then(data => console.log('Resolved: ', data));
+    .then(data => console.log('Resolved: ', data))
+    .catch(errror => console.log('Rejected: ', errror.message));
