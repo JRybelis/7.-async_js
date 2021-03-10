@@ -1,32 +1,31 @@
-const getTodos = (resource, callback) => {
-    const request = new XMLHttpRequest();
+const getTodos = (resource) => {
+    
+    return new Promise((resolve, reject) => {
+        const request = new XMLHttpRequest();
 
-    //reacting to ready state change of the XMLHttp request:
-    request.addEventListener('readystatechange', () => {
-        if(request.readyState === 4 && request.status === 200) {
-            const data = JSON.parse(request.responseText);
-            callback(undefined, data);            
-        } else if (request.readyState === 4) {
-            callback('Could not fetch the data', undefined);
-        }
+        //reacting to ready state change of the XMLHttp request:
+        request.addEventListener('readystatechange', () => {
+            if (request.readyState === 4 && request.status === 200) {
+                const data = JSON.parse(request.responseText);
+                resolve(data);
+            } else if (request.readyState === 4) {
+                reject('Could not fetch the data');
+            }
+        });
+
+        request.open('GET', resource);
+        request.send();
     });
-
-    request.open('GET', resource);
-    request.send();
 };
 
-//callback function:
-getTodos('todos/simA.json', (error, data) => {
-    // if (error) {
-    //     console.log(error);
-    // } else {
-    //     console.log(data);
-    // }
-    console.log(data);
-    getTodos('todos/simB.json', (error, data) => {
-        console.log(data);
-        getTodos('todos/simC.json', (error, data) => {
-            console.log(data);
-        });
-    });
+getTodos('todos/simA.json').then(data => {
+    console.log('Promise resolved: ', data);
+    return getTodos('todos/simB.json');
+}).then(data =>{
+    console.log('Second promise resolved: ', data);
+    return getTodos('todos/simC.json');
+}).then(data =>{
+    console.log('Third promise resolved: ', data);
+}).catch(errror => {
+    console.log('promise rejected: ', errror);
 });
