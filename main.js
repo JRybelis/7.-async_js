@@ -1,4 +1,4 @@
-import{fetch} from ('./fetchApi.js');
+import {getTodosA} from './asyncAwait.js';
 
 const getTodos = (resource) => {
     
@@ -31,3 +31,8 @@ getTodos('todos/simA.json').then(data => {
 }).catch(errror => {
     console.log('promise rejected: ', errror);
 });
+
+//async & await:
+
+getTodosA()
+    .then(data => console.log('Resolved: ', data));

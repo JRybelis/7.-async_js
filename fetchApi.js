@@ -7,4 +7,3 @@ fetch('todos/simB').then((response) =>{
     console.log('rejected', error);
 });
 
-export {fetch}
